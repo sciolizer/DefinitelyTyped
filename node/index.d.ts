@@ -1548,6 +1548,9 @@ declare module "readline" {
 
     export interface Completer {
         (line: string): CompleterResult;
+    }
+
+    export interface AsyncCompleter {
         (line: string, callback: (err: any, result: CompleterResult) => void): any;
     }
 
@@ -1556,12 +1559,12 @@ declare module "readline" {
     export interface ReadLineOptions {
         input: NodeJS.ReadableStream;
         output?: NodeJS.WritableStream;
-        completer?: Completer;
+        completer?: Completer | AsyncCompleter;
         terminal?: boolean;
         historySize?: number;
     }
 
-    export function createInterface(input: NodeJS.ReadableStream, output?: NodeJS.WritableStream, completer?: Completer, terminal?: boolean): ReadLine;
+    export function createInterface(input: NodeJS.ReadableStream, output?: NodeJS.WritableStream, completer?: Completer | AsyncCompleter, terminal?: boolean): ReadLine;
     export function createInterface(options: ReadLineOptions): ReadLine;
 
     export function cursorTo(stream: NodeJS.WritableStream, x: number, y: number): void;
